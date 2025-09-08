@@ -8,5 +8,5 @@ To see the full mod description, its features and how to configure it, check out
 
 ## Version
 <span>
-This branch is for <strong>Forge 1.20.1-1.20.5</strong>. Check other branches for the other versions/loaders.
+This branch is for <strong>Forge 1.20.1-1.20.4</strong>. Check other branches for the other versions/loaders.
 </span>
