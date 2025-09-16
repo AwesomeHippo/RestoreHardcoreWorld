@@ -75,12 +75,17 @@ public class ClientEvents {
             CompoundTag player = data.getCompound("Player");
 
             // reset death related stats
+            // entity data available here: https://minecraft.wiki/w/Player.dat_format
             player.putFloat("Health", 20.0F);
             player.putInt("foodLevel", 20);
             player.putFloat("foodSaturationLevel", 5.0F);
+            player.putFloat("foodExhaustionLevel", 0.0F);
             player.putShort("DeathTime", (short) 0);
             player.putShort("HurtTime", (short) 0);
             player.putInt("HurtByTimestamp", 0);
+
+            // remove all the effects (potions etc...) of the player
+            player.put("ActiveEffects", new ListTag());
 
             // XPs are part of keep inventory
             if (!keepInventory) {
@@ -98,6 +103,8 @@ public class ClientEvents {
             // convert to normal if keepHardcore is false
             if (!keepHardcore) {
                 data.putBoolean("hardcore", false);
+                data.putBoolean("DifficultyLocked", false); // unlock the difficulty if we get back to normal
+                player.putInt("playerGameType", 0); // put survival again
             }
 
             // respawn the player correctly
