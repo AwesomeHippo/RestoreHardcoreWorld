@@ -7,10 +7,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.gui.screens.worldselection.SelectWorldScreen;
 import net.minecraft.client.gui.components.toasts.SystemToast;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.DoubleTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.NbtIo;
+import net.minecraft.nbt.*;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.storage.LevelResource;
 import net.minecraftforge.client.event.ScreenEvent;
@@ -87,6 +84,19 @@ public class ClientEvents {
             // remove all the effects (potions etc...) of the player
             player.put("ActiveEffects", new ListTag());
 
+            // reset motion (stationary)
+            ListTag motion = new ListTag();
+            motion.add(DoubleTag.valueOf(0.0));
+            motion.add(DoubleTag.valueOf(0.0));
+            motion.add(DoubleTag.valueOf(0.0));
+            player.put("Motion", motion);
+
+            // reset rotation
+            ListTag rotation = new ListTag();
+            rotation.add(FloatTag.valueOf(0.0F));
+            rotation.add(FloatTag.valueOf(0.0F));
+            player.put("Rotation", rotation);
+
             // XPs are part of keep inventory
             if (!keepInventory) {
                 player.putInt("XpLevel", 0);
@@ -128,8 +138,6 @@ public class ClientEvents {
             pos.add(DoubleTag.valueOf(spawnY));
             pos.add(DoubleTag.valueOf(spawnZ));
             player.put("Pos", pos);
-
-            // not sure if Rotation should be reset too
 
             NbtIo.writeCompressed(nbt, Files.newOutputStream(levelDatPath));
             mc.setScreen(new SelectWorldScreen(new TitleScreen()));
