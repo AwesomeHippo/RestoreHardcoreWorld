@@ -18,9 +18,7 @@ public class RestoreHardcoreWorld {
             FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onClientSetup);
             Config.init();
             ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG);
-        } else {
-            // TODO: log it runs only on client, but I'll probably do it with my future lib
-        }
+        }// TODO: log it runs only on client, but I'll probably do it with my future lib
     }
 
     private void onClientSetup(FMLClientSetupEvent event) {
